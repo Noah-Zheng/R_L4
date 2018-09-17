@@ -1,0 +1,36 @@
+```{r}
+library(ggplot2)
+data(diamonds)
+summary(diamonds)
+```
+
+Price histogram by cut
+```{r}
+ggplot(diamonds, aes(x = price)) +
+  geom_histogram() +
+  facet_wrap(~cut)
+```
+
+summary by cut
+```{r}
+by(diamonds$price, diamonds$cut, summary)
+```
+
+```{r}
+?facet_wrap
+```
+
+```{r}
+ggplot(diamonds, aes(x = price)) +
+  geom_histogram() +
+  facet_wrap(~cut, scales = "free_y")
+```
+# Create a histogram of price per carat and facet it by cut. adjust the bin width and transform the scale of the x-axis using log10
+```{r}
+ggplot(diamonds, aes(x = price/carat)) +
+  geom_histogram() +
+  facet_wrap(~cut, scales = "free_y") +
+  scale_x_log10()
+```
+
+
