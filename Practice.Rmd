@@ -17,7 +17,7 @@ by(diamonds$price, diamonds$cut, summary)
 ```
 
 ```{r}
-?facet_wrap
+?diamonds
 ```
 
 ```{r}
@@ -31,6 +31,29 @@ ggplot(diamonds, aes(x = price/carat)) +
   geom_histogram() +
   facet_wrap(~cut, scales = "free_y") +
   scale_x_log10()
+```
+
+Using box plots
+```{r}
+ggplot(diamonds, aes(x = cut, y = price)) +
+  geom_boxplot()
+```
+
+```{r}
+ggplot(diamonds, aes(x = clarity, y = price)) +
+  geom_boxplot()
+```
+
+```{r}
+ggplot(diamonds, aes(x = color, y = price)) +
+  geom_boxplot()
+
+by(diamonds$price, diamonds$color, summary)
+```
+
+```{r}
+IQR(subset(diamonds, color == "D")$price)
+IQR(subset(diamonds, color == "J")$price)
 ```
 
 
