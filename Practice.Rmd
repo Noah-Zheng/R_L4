@@ -56,4 +56,29 @@ IQR(subset(diamonds, color == "D")$price)
 IQR(subset(diamonds, color == "J")$price)
 ```
 
+price per acrat of diamonds by colors using boxplot
+```{r}
+ggplot(diamonds, aes(x = color, y = price/carat)) +
+  geom_boxplot()
+```
+
+carat using a frequency polygon
+
+```{r}
+ggplot(subset(diamonds, diamonds$carat < 2), aes(x = carat)) +
+  geom_freqpoly(show.legend = TRUE) +
+  stat_bin(aes(y = ..count.., label = ..count..), geom="text", vjust=-.1) + scale_x_continuous(breaks = seq(0,5,0.1))
+
+
+```
+
+```{r}
+qplot(x=carat, data = diamonds, geom = "freqpoly", ylim = c(2000,15000)) +
+  scale_x_continuous(breaks = seq(0,5,0.1)) +
+  coord_cartesian(xlim = c(0,2))
+```
+
+```{r}
+?geom_freqpoly
+```
 
