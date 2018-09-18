@@ -1,0 +1,36 @@
+---
+title: "GapminderData"
+output: html_document
+---
+## Source  
+https://www.gapminder.org/data/
+
+## Data Chosen
+children_per_woman_total_fertility.csv
+
+### Import data
+```{r}
+library(ggplot2)
+df <- read.csv("children_per_woman_total_fertility.csv", header = T, row.names = 1, check.names = F)
+head(df,3)
+df <- t(df)
+```
+
+```{r}
+colnames(df)
+qplot(x = df$China)
+```
+
+```{r}
+df_china <- t(df_china)
+```
+
+```{r}
+colnames(df_china)
+
+```
+
+```{r}
+qplot(x = childperwoman, data = df_china)
+```
+
