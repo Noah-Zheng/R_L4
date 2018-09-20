@@ -6,31 +6,73 @@ output: html_document
 https://www.gapminder.org/data/
 
 ## Data Chosen
-children_per_woman_total_fertility.csv
+male_family_workers_percent_of_male_employment.csv
+male_salaried_workers_percent_of_non_agricultural_male_employment.csv
+male_self_employed_percent_of_male_employment.csv
+
+## Question
+
 
 ### Import data
 ```{r}
 library(ggplot2)
-df <- read.csv("children_per_woman_total_fertility.csv", header = T, row.names = 1, check.names = F)
-head(df,3)
-df <- t(df)
+library(dplyr)
+library(tidyr)
+library(cowplot)
+
+family <- read.csv("male_family_workers_percent_of_male_employment.csv", row.names = 1)
+salaried <- read.csv("male_salaried_workers_percent_of_non_agricultural_male_employment.csv", row.names = 1)
+self <- read.csv("male_self_employed_percent_of_male_employment.csv", row.names = 1)
 ```
 
 ```{r}
-colnames(df)
-qplot(x = df$China)
+japan <- family[77, ]
+japan <- bind_rows(japan, self[80,])
+japan_s <- salaried[63,]
+japan
+japan_s
+```
+
+
+```{r}
+japan <- cbind(work_type = c('family', 'self'), japan)
+japan_s <- cbind(work_type = c('salaried'), japan_s)
+
+
 ```
 
 ```{r}
-df_china <- t(df_china)
-```
-
-```{r}
-colnames(df_china)
+colnames(japan) <- c('work_type', seq(1970,2022))
+colnames(japan_s) <- c('work_type', seq(1970,2017))
 
 ```
 
 ```{r}
-qplot(x = childperwoman, data = df_china)
+
+japan2 <- gather(japan, 'year', 'percent', 2:54)
+japan_s2 <- gather(japan_s, 'year', 'percent', 2:49)
 ```
+
+```{r}
+usa <- subset(family, row.names(family) == "United States")
+usa <- bind_rows(usa, subset(self, row.names(self) == "United States"))
+usa_s <- subset(salaried, row.names(salaried) == "United States")
+
+
+usa <- cbind(work_type = c('family', 'self'), usa)
+usa_s <- cbind(work_type = c('salaried'), usa_s)
+
+colnames(usa) <- c('work_type', seq(1970,2022))
+colnames(usa_s) <- c('work_type', seq(1970,2017))
+
+usa2 <- gather(usa, 'year', 'percent', 2:54)
+usa_s2 <- gather(usa_s, 'year', 'percent', 2:49)
+```
+
+
+```{r}
+qplot(x=year, y = percent, data = japan2, color = work_type)
+```
+
+
 

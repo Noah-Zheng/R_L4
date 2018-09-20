@@ -1,0 +1,89 @@
+---
+title: "Children/Woman"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+df = read.csv("children_per_woman_total_fertility.csv")
+```
+
+```{r}
+china <- subset(df, df$geo == "China")
+usa <- subset(df, df$geo == "United States")
+aus <- subset(df, df$geo == "Australia")
+```
+
+```{r}
+colnames(china) <- c("country", seq(1800,2018))
+colnames(usa) <- c("country", seq(1800,2018))
+colnames(aus) <- c("country", seq(1800,2018))
+```
+
+```{r}
+df2 <- bind_rows(china, usa, aus)
+```
+
+
+```{r}
+df3 <- gather(df2, 'year', 'children', 2:220)
+
+```
+
+```{r}
+qplot(x = year, y = children, data = df3, color = country) +
+  scale_x_discrete(breaks = seq(1800,2018,5))+
+  ggtitle("Children Per Woman")
+```
+
+```{r}
+ggplot(data = df3, aes(x=year, y=children, color = country, group = country)) +
+  geom_line() +
+  scale_x_discrete(breaks = seq(1800,2018,5)) +
+  scale_y_continuous(breaks = seq(0,7,0.5)) +
+  ggtitle('')
+
+```
+
+```{r}
+population <- read.csv("population_total.csv")
+```
+
+```{r}
+china_p <- subset(population, population$geo == "China")
+usa_p <- subset(population, population$geo == "United States")
+aus_p <- subset(population, population$geo == "Australia")
+
+colnames(china_p) <- c("country", seq(1800,2018))
+colnames(usa_p) <- c("country", seq(1800,2018))
+colnames(aus_p) <- c("country", seq(1800,2018))
+
+df5 <- bind_rows(china_p, usa_p, aus_p)
+
+```
+
+```{r}
+df6 <- gather(df5, 'year', 'population', 2:220)
+```
+
+
+```{r}
+ggplot(df6, aes(x=year, y=population, color = country, group = country)) +
+  geom_line()
+```
+
+```{r}
+df4 = subset(df3, df3$country == "Australia" & df3$children >5)
+```
+
+
+
+```{r}
+#Australia
+
+qplot(x = year, y = children, data = df4) +
+  scale_x_discrete(breaks = seq(1800,2018,1))
+```
+
