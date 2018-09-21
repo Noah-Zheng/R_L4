@@ -1,0 +1,46 @@
+---
+title: "FriendsBirthday"
+output: html_document
+---
+```{r}
+df <- read.csv("birthdaysExample.csv")
+str(df)
+head(df)
+```
+
+```{r}
+library(lubridate)
+df$dates <- mdy(df$dates)
+head(df)
+```
+
+```{r}
+df$year <- year(df$dates)
+df$month <- month(df$dates)
+df$day <- day(df$dates)
+head(df)
+```
+
+```{r}
+ggplot(df, aes(x = month)) +
+  geom_histogram() +
+  scale_x_discrete(breaks = seq(1,12,1))
+```
+
+
+
+```{r}
+library(ggplot2)
+qplot(x=month, data = df)
+```
+
+```{r}
+df$day <- as.double(df$day)
+qplot(x=day, data = df) +
+  scale_x_discrete(breaks = seq(1,31,1))
+```
+
+```{r}
+qplot(x=df$dates, data = df)
+```
+
