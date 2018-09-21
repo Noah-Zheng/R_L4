@@ -75,7 +75,8 @@ ggplot(df6, aes(x=year, y=population, color = country, group = country)) +
 ```
 
 ```{r}
-df4 = subset(df3, df3$country == "Australia" & df3$children >5)
+df4 = subset(df3, df3$country == "Australia" & df3$children >5 
+             & df3$year > 1850)
 ```
 
 
